@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة إدارة المطعم | تحليل 360°</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="container">
+    <div id="critical-banner" class="critical-banner"></div>
+
+    <section id="kpi-topbar" class="topbar" aria-label="Top KPI Bar"></section>
+
+    <section class="dashboard-grid">
+      <div class="panel">
+        <h2>Smart Alerts</h2>
+        <div id="smart-alerts" class="alerts"></div>
+      </div>
+      <aside class="panel">
+        <h2>Bleeding Score</h2>
+        <div class="bleeding-score">
+          <div>
+            <div style="font-weight:700; margin-bottom:0.2rem;">مؤشر النزيف الرقمي</div>
+            <div class="subnote">انخفاض حاد في الوصول، التفاعل، الرسائل، والاتصالات الأسبوعية.</div>
+          </div>
+          <div id="bleeding-score" class="score-pill"></div>
+        </div>
+      </aside>
+    </section>
+
+    <div class="tabs" role="tablist" aria-label="Analytics Tabs">
+      <button class="tab-btn active" data-tab="overview">Overview</button>
+      <button class="tab-btn" data-tab="audience">Audience Insights</button>
+      <button class="tab-btn" data-tab="campaigns">Campaigns</button>
+      <button class="tab-btn" data-tab="content">Content Performance</button>
+      <button class="tab-btn" data-tab="action">Action Center</button>
+    </div>
+
+    <section id="overview" class="tab-pane active panel">
+      <h2>360° Performance Snapshot (آخر 28 يوم)</h2>
+      <p class="subnote">المنصة في حالة تراجع تسويقي مستمر، مع فجوة تحويل واضحة بسبب غياب Pixel وتعطل قناة إنستغرام.</p>
+    </section>
+
+    <section id="audience" class="tab-pane panel">
+      <h2>Audience Insights</h2>
+      <div id="audience-insights-grid" class="insights-grid"></div>
+    </section>
+
+    <section id="campaigns" class="tab-pane panel">
+      <h2>جدول الحملات الفعلية</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>الحملة</th>
+              <th>الحالة</th>
+              <th>النتيجة</th>
+              <th>Cost/Result</th>
+              <th>Amount Spent</th>
+            </tr>
+          </thead>
+          <tbody id="campaign-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="content" class="tab-pane panel">
+      <h2>Content Performance</h2>
+      <div id="content-compare" class="content-compare"></div>
+    </section>
+
+    <section id="action" class="tab-pane panel">
+      <h2>Action Center | خطة إنقاذ 90 يوماً</h2>
+      <div id="action-phases" class="action-phases"></div>
+    </section>
+  </div>
+
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>
