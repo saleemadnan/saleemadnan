@@ -1,58 +1,38 @@
 const express = require('express');
 const { metaApiService } = require('../services/metaApi');
+const { asyncHandler, requireFields } = require('./_shared');
 
-const router = express.Router();
+function createInstagramRouter(service = metaApiService) {
+  const router = express.Router();
 
-router.get('/api/instagram/:igUserId', async (req, res) => {
-  try {
-    const data = await metaApiService.getInstagramUserDetails(req.params.igUserId);
+  router.get('/api/instagram/:igUserId', asyncHandler(async (req, res) => {
+    const data = await service.getInstagramUserDetails(req.params.igUserId);
     res.json(data);
-  } catch (error) {
-    res.status(error.statusCode || 500).json({ error: error.message, details: error.details });
-  }
-});
+  }));
 
-router.get('/api/instagram/:igUserId/media', async (req, res) => {
-  try {
-    const data = await metaApiService.getInstagramMedia(req.params.igUserId);
+  router.get('/api/instagram/:igUserId/media', asyncHandler(async (req, res) => {
+    const data = await service.getInstagramMedia(req.params.igUserId);
     res.json(data);
-  } catch (error) {
-    res.status(error.statusCode || 500).json({ error: error.message, details: error.details });
-  }
-});
+  }));
 
-router.post('/api/instagram/:igUserId/publish', async (req, res) => {
-  try {
-    const container = await metaApiService.createInstagramContainer(req.params.igUserId, req.body);
-    const published = await metaApiService.publishInstagramContainer(
-      req.params.igUserId,
-      container.id
-    );
+  router.post('/api/instagram/:igUserId/publish', requireFields(['image_url']), asyncHandler(async (req, res) => {
+    const container = await service.createInstagramContainer(req.params.igUserId, req.body);
+    const published = await service.publishInstagramContainer(req.params.igUserId, container.id);
     res.json({ container, published });
-  } catch (error) {
-    res.status(error.statusCode || 500).json({ error: error.message, details: error.details });
-  }
-});
+  }));
 
-router.get('/api/instagram/:igUserId/insights', async (req, res) => {
-  try {
-    const data = await metaApiService.getInstagramInsights(
-      req.params.igUserId,
-      req.query.period || 'day'
-    );
+  router.get('/api/instagram/:igUserId/insights', asyncHandler(async (req, res) => {
+    const data = await service.getInstagramInsights(req.params.igUserId, req.query.period || 'day');
     res.json(data);
-  } catch (error) {
-    res.status(error.statusCode || 500).json({ error: error.message, details: error.details });
-  }
-});
+  }));
 
-router.get('/api/instagram/:igUserId/mentions', async (req, res) => {
-  try {
-    const data = await metaApiService.getInstagramMentions(req.params.igUserId);
+  router.get('/api/instagram/:igUserId/mentions', asyncHandler(async (req, res) => {
+    const data = await service.getInstagramMentions(req.params.igUserId);
     res.json(data);
-  } catch (error) {
-    res.status(error.statusCode || 500).json({ error: error.message, details: error.details });
-  }
-});
+  }));
 
-module.exports = router;
+  return router;
+}
+
+module.exports = createInstagramRouter();
+module.exports.createInstagramRouter = createInstagramRouter;

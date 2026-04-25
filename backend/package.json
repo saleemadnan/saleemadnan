@@ -6,10 +6,13 @@
   "scripts": {
     "dev": "node server.js",
     "start": "node server.js",
-    "test": "node --test services/meta/__tests__/meta.test.js"
+    "test": "node --test services/meta/__tests__/meta.test.js routes/__tests__.js"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
     "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "supertest": "^7.1.1"
   }
 }
