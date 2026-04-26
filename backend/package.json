@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node server.js",
     "start": "node server.js",
-    "test": "node --test services/meta/__tests__/meta.test.js routes/__tests__.js"
+    "test": "node --test services/meta/__tests__/meta.test.js services/meta/__tests__/requestBuilder.test.js services/meta/__tests__/transport.test.js routes/__tests__.js"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
