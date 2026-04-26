@@ -1,12 +1,12 @@
 const { HttpError, normalizeMetaError } = require('./errors');
 const { buildRequest } = require('./requestBuilder');
-const { createTransport } = require('./transport');
+const { makeTransport } = require('./transport');
 const { translateMetaError } = require('./errorTranslator');
 const { mockResponse } = require('./mocks');
 
 const META_BASE_URL = 'https://graph.facebook.com/v19.0';
 
-function makeClient({ requestBuilder = buildRequest, transport = createTransport(), errorTranslator = translateMetaError } = {}) {
+function makeClient({ requestBuilder = buildRequest, transport = makeTransport(), errorTranslator = translateMetaError } = {}) {
   return {
     async request({ baseUrl, accessToken, forceMock, endpoint, method, params, body }) {
       if (forceMock || !accessToken) {
