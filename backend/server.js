@@ -1,4 +1,5 @@
 const express = require('express');
+const rateLimit = require('express-rate-limit');
 const dotenv = require('dotenv');
 const campaignsRoutes = require('./routes/campaigns');
 const messagingRoutes = require('./routes/messaging');
@@ -35,6 +36,19 @@ function createApp(service = metaApiService) {
       env: configured,
     });
   });
+
+  const apiRateLimiter = rateLimit({
+    windowMs: 60 * 1000,
+    max: 100,
+    standardHeaders: true,
+    legacyHeaders: false,
+    skip: (req) => req.path === '/health',
+    message: {
+      error: 'Too many requests, please try again later.',
+    },
+  });
+
+  app.use('/api', apiRateLimiter);
 
   app.post('/api/auth/refresh-token', asyncHandler(async (req, res) => {
     const internalApiKey = req.headers['x-internal-api-key'];

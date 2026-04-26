@@ -6,6 +6,7 @@ const express = require('express');
 const { createCampaignsRouter } = require('./campaigns');
 const { createMessagingRouter } = require('./messaging');
 const { errorMiddleware } = require('./_shared');
+const { createApp } = require('../server');
 
 function buildApp(router) {
   const app = express();
@@ -53,4 +54,29 @@ test('campaigns router forwards service response on valid input', async () => {
   assert.equal(response.body.id, 'cmp_123');
   assert.equal(response.body.accountId, 'act_42');
   assert.equal(response.body.payload.name, 'Spring Sale');
+});
+
+test('POST /api/auth/refresh-token returns 401 when x-internal-api-key is missing/invalid', async () => {
+  process.env.INTERNAL_API_KEY = 'expected-key';
+
+  const app = createApp({
+    refreshLongLivedToken: async () => ({ access_token: 'new_token' }),
+  });
+
+  const response = await request(app)
+    .post('/api/auth/refresh-token')
+    .send({ currentToken: 'abc' });
+
+  assert.equal(response.status, 401);
+  assert.equal(response.body.error, 'Unauthorized');
+});
+
+test('errorMiddleware returns 500 for unexpected errors without statusCode', async () => {
+  const app = express();
+  app.get('/boom', (req, res, next) => next(new Error('boom')));
+  app.use(errorMiddleware);
+
+  const response = await request(app).get('/boom');
+  assert.equal(response.status, 500);
+  assert.equal(response.body.error, 'boom');
 });

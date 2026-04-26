@@ -1,12 +1,13 @@
-const { MetaApiError, normalizeMetaError } = require('./errors');
+const { HttpError, MetaApiError, normalizeMetaError } = require('./errors');
 const { mockResponse } = require('./mocks');
 
 const META_BASE_URL = 'https://graph.facebook.com/v19.0';
 
 class MetaClient {
-  constructor({ baseUrl = META_BASE_URL, accessToken = process.env.META_ACCESS_TOKEN || '' } = {}) {
+  constructor({ baseUrl = META_BASE_URL, accessToken = process.env.META_ACCESS_TOKEN || '', forceMock = false } = {}) {
     this.baseUrl = baseUrl;
     this.accessToken = accessToken;
+    this.forceMock = forceMock;
     this.isConfigured = Boolean(accessToken);
   }
 
@@ -16,7 +17,7 @@ class MetaClient {
   }
 
   async request(path, { method = 'GET', params = {}, body = null } = {}) {
-    if (!this.isConfigured) {
+    if (this.forceMock || !this.isConfigured) {
       return mockResponse(path, method, { params, body });
     }
 
@@ -45,8 +46,13 @@ class MetaClient {
 
       return data;
     } catch (error) {
-      if (error instanceof MetaApiError) {
+      if (error instanceof HttpError || error instanceof MetaApiError) {
         throw error;
+      }
+
+      const metaPayload = error.response?.data?.error || error.response?.data || error.error;
+      if (metaPayload) {
+        throw normalizeMetaError(error.response?.status || 500, metaPayload);
       }
 
       throw new MetaApiError(`Meta API request failed: ${error.message}`, 502, {

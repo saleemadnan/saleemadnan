@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "dotenv": "^16.4.5",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.4.0"
   },
   "devDependencies": {
     "supertest": "^7.1.1"

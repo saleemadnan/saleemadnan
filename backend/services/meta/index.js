@@ -7,7 +7,16 @@ const { createMessagingService } = require('./messaging');
 const { createTokenService } = require('./tokens');
 
 function createMetaApiService(config = {}) {
-  const client = new MetaClient(config);
+  const accessToken = config.token ?? config.accessToken ?? (process.env.META_ACCESS_TOKEN || '');
+  const forceMock = Boolean(config.mock);
+  const client = new MetaClient({
+    baseUrl: config.baseUrl || META_BASE_URL,
+    accessToken,
+    forceMock,
+  });
+
+  const adAccountId = config.adAccountId || process.env.META_AD_ACCOUNT_ID || '';
+  const pageId = config.pageId || process.env.META_PAGE_ID || '';
 
   return {
     baseUrl: client.baseUrl,
@@ -21,8 +30,8 @@ function createMetaApiService(config = {}) {
     request: (...args) => client.request(...args),
     ...createPagesService(client),
     ...createInstagramService(client),
-    ...createAdsService(client, process.env.META_AD_ACCOUNT_ID || ''),
-    ...createMessagingService(client, process.env.META_PAGE_ID || ''),
+    ...createAdsService(client, adAccountId),
+    ...createMessagingService(client, pageId),
     ...createTokenService(client),
   };
 }
