@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meta Dashboard</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 20px; }
+      .tabs { display: flex; gap: 12px; margin-bottom: 16px; }
+      .tab { padding: 8px 12px; border: 1px solid #ccc; border-radius: 8px; cursor: pointer; }
+      .panel { border: 1px solid #ddd; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+      .status.ok { color: green; font-weight: 700; }
+      .status.no { color: #b00; font-weight: 700; }
+      label { display: block; margin: 10px 0 4px; }
+      input { width: 100%; padding: 8px; }
+      button { margin-top: 12px; padding: 8px 12px; }
+      pre { background: #f7f7f7; padding: 8px; border-radius: 6px; overflow: auto; }
+    </style>
+  </head>
+  <body>
+    <h1>لوحة إدارة Meta</h1>
+
+    <div class="panel">
+      <h2>حالة الاتصال</h2>
+      <p>Page Access Token Status: <span id="tokenStatus" class="status no">غير متصل</span></p>
+      <button id="connectFacebook">ربط حساب Facebook</button>
+    </div>
+
+    <div class="tabs">
+      <div class="tab">الصفحات</div>
+      <div class="tab">Instagram</div>
+      <div class="tab">الحملات الإعلانية</div>
+      <div class="tab">الرسائل</div>
+      <div class="tab">الإعدادات</div>
+    </div>
+
+    <div class="panel">
+      <h2>الصفحات المرتبطة</h2>
+      <button id="loadPages">تحميل الصفحات</button>
+      <pre id="pagesOutput">[]</pre>
+    </div>
+
+    <div class="panel">
+      <h2>Instagram</h2>
+      <p>تبويب منفصل لإدارة حساب Instagram التجاري والمنشورات والإحصاءات.</p>
+    </div>
+
+    <div class="panel">
+      <h2>الإعدادات</h2>
+      <label for="metaAppId">Meta App ID</label>
+      <input id="metaAppId" type="text" placeholder="أدخل App ID" />
+      <label for="metaAppSecret">Meta App Secret</label>
+      <input id="metaAppSecret" type="password" placeholder="أدخل App Secret" />
+    </div>
+
+    <script src="./js/api.js"></script>
+    <script>
+      const tokenStatusEl = document.getElementById('tokenStatus');
+      const pagesOutput = document.getElementById('pagesOutput');
+      const connectButton = document.getElementById('connectFacebook');
+
+      async function loadHealth() {
+        try {
+          const response = await fetch('/api/health');
+          const data = await response.json();
+          const connected = data.tokenStatus === 'connected';
+          tokenStatusEl.textContent = connected ? 'متصل' : 'غير متصل';
+          tokenStatusEl.className = `status ${connected ? 'ok' : 'no'}`;
+        } catch (error) {
+          tokenStatusEl.textContent = 'غير متصل';
+          tokenStatusEl.className = 'status no';
+        }
+      }
+
+      document.getElementById('loadPages').addEventListener('click', async () => {
+        try {
+          const pages = await window.MetaDashboardApi.getPages();
+          pagesOutput.textContent = JSON.stringify(pages, null, 2);
+        } catch (error) {
+          pagesOutput.textContent = error.message;
+        }
+      });
+
+      connectButton.addEventListener('click', () => {
+        const appId = document.getElementById('metaAppId').value.trim();
+        const redirectUri = `${window.location.origin}/auth/callback`;
+        const scopes = [
+          'pages_manage_posts',
+          'pages_read_engagement',
+          'pages_manage_ads',
+          'ads_management',
+          'instagram_basic',
+          'instagram_content_publish',
+          'instagram_manage_insights',
+          'pages_messaging',
+        ].join(',');
+
+        if (!appId) {
+          alert('يرجى إدخال Meta App ID أولاً من الإعدادات.');
+          return;
+        }
+
+        const oauthUrl = `https://www.facebook.com/v19.0/dialog/oauth?client_id=${encodeURIComponent(appId)}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scopes)}&response_type=token`;
+        window.open(oauthUrl, '_blank', 'noopener,noreferrer');
+      });
+
+      loadHealth();
+    </script>
+  </body>
+</html>
