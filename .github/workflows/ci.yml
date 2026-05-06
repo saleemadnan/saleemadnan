@@ -18,12 +18,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
 
       - name: Install dependencies
         run: |
           if [ -f package.json ]; then
-            npm ci
+            npm install
           else
             echo "No package.json found — skipping install"
           fi
