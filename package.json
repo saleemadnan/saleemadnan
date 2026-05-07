@@ -1,0 +1,16 @@
+{
+  "name": "saleemadnan-profile",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Repository-level checks for the Abu Ghazaleh restaurant management profile project.",
+  "scripts": {
+    "test": "npm run test:backend && npm run test:restaurant-manager",
+    "test:backend": "npm --prefix backend test",
+    "test:restaurant-manager": "node --test restaurant-manager/tests/dashboard-render.test.mjs",
+    "audit:backend": "npm --prefix backend audit --omit=dev --audit-level=high"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
