@@ -1,23 +1,41 @@
-# Abu Ghazaleh Restaurant Management System
+# Saleem Adnan
 
-## Hairiest file review: dashboard front-end
-The dashboard was previously concentrated in one large HTML file. It is now split into layers to isolate functionality and improve testability.
+AI engineering, legal-tech systems, automation, trading infrastructure, and practical DevOps.
 
-### Current split
-- `restaurant-manager/index.html`: semantic shell + mount points.
-- `restaurant-manager/styles.css`: visual styles only.
-- `restaurant-manager/js/data/*.js`: domain data by area (KPIs, alerts, audience, campaigns, content, action plan).
-- `restaurant-manager/js/render/*.js`: pure renderers for each dashboard area.
-- `restaurant-manager/js/controllers/tabs-controller.js`: tab interaction only.
-- `restaurant-manager/js/render/dashboard-mount.js`: composition/wiring of renderers to DOM.
-- `restaurant-manager/js/main.js`: bootstrapping.
+I build local-first tools that turn messy business, legal, and operational workflows into testable software: dashboards, APIs, retrieval systems, automation scripts, and deployment-ready prototypes.
 
-### Better isolation ideas (next)
-- Add a `data-schema.js` validator for each data module to fail fast on malformed input.
-- Add `services/metrics-adapter.js` so Meta API payloads are transformed once before rendering.
-- Move repeated UI fragments (stat card, percentage bar) into shared render helpers.
+## Current Focus
 
-### Testing strategy
-- **Unit**: continue testing renderers as pure string functions (`tests/dashboard-render.test.mjs`).
-- **DOM integration**: add JSDOM tests for `mountDashboard` and tab switching state transitions.
-- **E2E**: add Playwright smoke tests for RTL layout, tab navigation, and campaign table rendering.
+- Arabic legal AI and citation-grounded knowledge bases.
+- Restaurant and local-business operations dashboards.
+- Secure automation around APIs, CI/CD, and local developer tooling.
+- Trading infrastructure experiments with strict dry-run and risk controls.
+- Repository hygiene: tests, audits, CI, documentation, and secret handling.
+
+## Public Projects
+
+| Project | What It Shows | Status |
+| --- | --- | --- |
+| [Abu Ghazaleh Restaurant Management System](https://github.com/saleemadnan/saleemadnan) | Dashboard refactor, Meta backend checks, CI, and operational docs | Active |
+| [Solana Trade Bot](https://github.com/saleemadnan/solana-trade-bot) | Educational trading-bot PoC with dry-run safeguards, config validation, and CI | Active PoC |
+| [Supabase MCP Server](https://github.com/saleemadnan/supabase-mcp-server) | MCP, Supabase automation, and Python agent tooling experiments | Experimental |
+| [GitHub Actions Demo](https://github.com/saleemadnan/github-actions-demo) | Vite, React, CI, dependency audit, and GitHub Pages deployment | Maintained demo |
+
+## Engineering Standards
+
+- Reproducible setup before feature work.
+- CI checks before merge.
+- No committed runtime `.env` files.
+- Clear separation between proof-of-concept, production candidate, and archived work.
+- Security review for tokens, API keys, workflow permissions, and public automation.
+
+## Recent Cleanup
+
+- Repaired broken CI in the profile repository.
+- Migrated the Actions demo from Create React App to Vite and removed vulnerable dependency chains.
+- Added dry-run safeguards and CI checks to the Solana bot.
+- Archived old forks, duplicate experiments, and low-signal repositories.
+
+## Contact
+
+Open an issue or pull request on the relevant repository for technical discussion.
