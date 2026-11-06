@@ -1,41 +1,25 @@
-# Saleem Adnan
+# تسويق مطعم أبوغزالة — مستودع فصل مرحلي
 
-AI engineering, legal-tech systems, automation, trading infrastructure, and practical DevOps.
+هذا فرع تحضيري يضم **ملفات نظام التسويق المرتبطة بالمطعم** التي كانت داخل مستودع التعريف الشخصي `saleemadnan/saleemadnan`. الهدف نقلها لاحقًا إلى مستودع خاص مستقل، دون تغيير المستودع التعريفي أو فقدان ملفات المصدر.
 
-I build local-first tools that turn messy business, legal, and operational workflows into testable software: dashboards, APIs, retrieval systems, automation scripts, and deployment-ready prototypes.
+## المكونات
+- `backend/`: خادم Node.js/Express لتكامل Facebook Pages وInstagram وMeta Ads والرسائل.
+- `restaurant-manager/`: لوحة HTML/JavaScript لعرض مؤشرات التسويق والتنبيهات والحملات؛ بعض بياناتها ثابتة.
+- `frontend/`: واجهة Meta بسيطة للتعامل مع الخدمات البرمجية.
+- `docs/SETUP.md`: تعليمات إعداد اتصال Meta (تحتاج مراجعة الإصدارات والصلاحيات قبل الاستخدام الفعلي).
+- `.github/workflows/ci.yml`: فحوص Backend ولوحة العرض وملفات البيئة.
 
-## Current Focus
+## التشغيل والفحص
+يشترط Node.js 20 أو أحدث. داخل جذر المشروع:
+```bash
+npm test
+npm run audit:backend
+```
+لتشغيل الخادم: `cd backend && npm ci && npm run dev`.
 
-- Arabic legal AI and citation-grounded knowledge bases.
-- Restaurant and local-business operations dashboards.
-- Secure automation around APIs, CI/CD, and local developer tooling.
-- Trading infrastructure experiments with strict dry-run and risk controls.
-- Repository hygiene: tests, audits, CI, documentation, and secret handling.
+**تنبيه:** عند غياب رمز Meta يعمل الخادم ببيانات محاكاة. وجود الملفات لا يثبت أن الاتصال المباشر أو النشر الإنتاجي يعمل الآن. هذه النسخة للتجهيز والتحقق، وليست إقرارًا بالجاهزية للإنتاج.
 
-## Public Projects
+## مهم
+هذا ليس تطبيق طلب الطعام/أندرويد الموجود في `saleemadnan/meta-ads-marketplace/abu-ghazaleh-restaurant-app`؛ المشروعان لهما وظيفتان مختلفتان ولم تثبت بينهما اعتمادية مباشرة.
 
-| Project | What It Shows | Status |
-| --- | --- | --- |
-| [Abu Ghazaleh Restaurant Management System](https://github.com/saleemadnan/saleemadnan) | Dashboard refactor, Meta backend checks, CI, and operational docs | Active |
-| [Solana Trade Bot](https://github.com/saleemadnan/solana-trade-bot) | Educational trading-bot PoC with dry-run safeguards, config validation, and CI | Active PoC |
-| [Supabase MCP Server](https://github.com/saleemadnan/supabase-mcp-server) | MCP, Supabase automation, and Python agent tooling experiments | Experimental |
-| [GitHub Actions Demo](https://github.com/saleemadnan/github-actions-demo) | Vite, React, CI, dependency audit, and GitHub Pages deployment | Maintained demo |
-
-## Engineering Standards
-
-- Reproducible setup before feature work.
-- CI checks before merge.
-- No committed runtime `.env` files.
-- Clear separation between proof-of-concept, production candidate, and archived work.
-- Security review for tokens, API keys, workflow permissions, and public automation.
-
-## Recent Cleanup
-
-- Repaired broken CI in the profile repository.
-- Migrated the Actions demo from Create React App to Vite and removed vulnerable dependency chains.
-- Added dry-run safeguards and CI checks to the Solana bot.
-- Archived old forks, duplicate experiments, and low-signal repositories.
-
-## Contact
-
-Open an issue or pull request on the relevant repository for technical discussion.
+المصدر: `saleemadnan/saleemadnan` على commit `b418324e753450727fa46a76b4425d0d3bb569e2` (قبل الفصل).

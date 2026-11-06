@@ -1,9 +1,9 @@
 {
-  "name": "saleemadnan-profile",
+  "name": "abu-ghazaleh-restaurant-marketing",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Repository-level checks for the Abu Ghazaleh restaurant management profile project.",
+  "description": "Test orchestration for Abu Ghazaleh restaurant marketing dashboards and Meta API backend.",
   "scripts": {
     "test": "npm run test:backend && npm run test:restaurant-manager",
     "test:backend": "npm --prefix backend test",

@@ -4,9 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repo is
 
-The `saleemadnan/saleemadnan` repo doubles as the GitHub **profile README** and the
-home of the **Abu Ghazaleh Restaurant Management System**. It has three independent
-parts plus a thin root orchestrator:
+This extraction branch contains the **Abu Ghazaleh Restaurant Marketing & Meta integration** source formerly stored alongside the GitHub profile README. Its three components and root test orchestrator are:
 
 - `backend/` — a Node/Express service that wraps the **Meta Graph API** (Facebook
   Pages, Instagram, Ads, Messaging) with a hand-rolled resilience layer. The only
