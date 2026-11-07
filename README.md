@@ -16,10 +16,10 @@ I build local-first tools that turn messy business, legal, and operational workf
 
 | Project | What It Shows | Status |
 | --- | --- | --- |
-| [Abu Ghazaleh Restaurant Management System](https://github.com/saleemadnan/saleemadnan) | Dashboard refactor, Meta backend checks, CI, and operational docs | Active |
+| [Abu Ghazaleh Restaurant Marketing](https://github.com/saleemadnan/AGT-abughazalea) | Marketing dashboard, Meta integration backend, tests, and operational docs | Private — development |
 | [Solana Trade Bot](https://github.com/saleemadnan/solana-trade-bot) | Educational trading-bot PoC with dry-run safeguards, config validation, and CI | Active PoC |
 | [Supabase MCP Server](https://github.com/saleemadnan/supabase-mcp-server) | MCP, Supabase automation, and Python agent tooling experiments | Experimental |
-| [GitHub Actions Demo](https://github.com/saleemadnan/github-actions-demo) | Vite, React, CI, dependency audit, and GitHub Pages deployment | Maintained demo |
+| [GitHub Actions Demo](https://github.com/saleemadnan/github-actions-demo) | Vite, React, CI, dependency audit, and GitHub Pages deployment | Archived demo |
 
 ## Engineering Standards
 
